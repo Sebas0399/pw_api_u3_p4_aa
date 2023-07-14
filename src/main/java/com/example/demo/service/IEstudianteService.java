@@ -10,5 +10,9 @@ public interface IEstudianteService {
     public void eliminarEstudiate(String cedula);
     public void insertarEstudiante(Estudiante estudiante);
     public void actualizarEstudiante(Estudiante estudiante);
+    public void actualizarParcial(String cedulaActual,String cedulaNueva);
+    public void eliminarEstudiate(Integer id);
+    public List<Estudiante> getEstudiantes(String provincia);
+
 
 }

@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.repository.model.Estudiante;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
@@ -23,16 +24,33 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
     }
 
     @Override
+    public Estudiante getEstudianteId(Integer id) {
+        return this.entityManager.find(Estudiante.class, id);
+    }
+
+    @Override
     public List<Estudiante> getEstudiantes() {
 
-        TypedQuery<Estudiante> myQuery = this.entityManager.createQuery("SELECT e FROM Estudiante e ", Estudiante.class);
+        TypedQuery<Estudiante> myQuery = this.entityManager.createQuery("SELECT e FROM Estudiante e ORDER BY e.id ASC ", Estudiante.class);
         return myQuery.getResultList();
     }
 
     @Override
+    public List<Estudiante> getEstudiantes(String provincia) {
+        TypedQuery<Estudiante> myQuery = this.entityManager.createQuery("SELECT e FROM Estudiante e WHERE e.provincia=:provincia", Estudiante.class);
+        myQuery.setParameter("provincia",provincia);
+        return myQuery.getResultList();    }
+
+    @Override
     public void eliminarEstudiate(String cedula) {
-        Estudiante est= this.getEstudianteCedula(cedula);
+        Estudiante est = this.getEstudianteCedula(cedula);
         this.entityManager.remove(est);
+    }
+
+    @Override
+    public void eliminarEstudiate(Integer id) {
+        Estudiante estudiante = this.getEstudianteId(id);
+        this.entityManager.remove(estudiante);
     }
 
     @Override
@@ -42,10 +60,17 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 
     @Override
     public void actualizarEstudiante(Estudiante estudiante) {
-        Estudiante est=this.getEstudianteCedula(estudiante.getCedula());
-        est.setApellido(estudiante.getApellido());
-        est.setNombre(estudiante.getNombre());
-        est.setFechaNacimiento(est.getFechaNacimiento());
+
         this.entityManager.merge(estudiante);
+    }
+
+    @Override
+    public void actualizarParcial(String cedulaActual, String cedulaNueva) {
+        Query myQuery = this.entityManager.createQuery("UPDATE Estudiante e SET e.cedula=:datoCedula WHERE e.cedula=:datoCondicion");
+        myQuery.setParameter("datoCedula", cedulaNueva);
+        myQuery.setParameter("datoCondicion", cedulaActual);
+        myQuery.executeUpdate();
+
+
     }
 }

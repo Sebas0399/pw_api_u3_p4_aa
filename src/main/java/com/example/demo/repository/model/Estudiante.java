@@ -20,6 +20,17 @@ public class Estudiante {
     @Column(name = "est_fecha_nacimiento")
 
     private String fechaNacimiento;
+    @Column(name = "est_provincia")
+
+    private String provincia;
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
 
     public Integer getId() {
         return id;

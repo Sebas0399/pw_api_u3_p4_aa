@@ -36,4 +36,19 @@ public class EstudianteServiceImpl implements IEstudianteService{
     public void actualizarEstudiante(Estudiante estudiante) {
         this.estudianteRepository.actualizarEstudiante(estudiante);
     }
+
+    @Override
+    public void actualizarParcial(String cedulaActual, String cedulaNueva) {
+        this.estudianteRepository.actualizarParcial(cedulaActual,cedulaNueva);
+    }
+
+    @Override
+    public void eliminarEstudiate(Integer id) {
+        this.estudianteRepository.eliminarEstudiate(id);
+    }
+
+    @Override
+    public List<Estudiante> getEstudiantes(String provincia) {
+        return this.estudianteRepository.getEstudiantes(provincia);
+    }
 }
