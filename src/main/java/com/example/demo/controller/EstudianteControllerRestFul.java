@@ -13,40 +13,40 @@ public class EstudianteControllerRestFul {
     @Autowired
     private IEstudianteService estudianteService;
 
-    @GetMapping(path = "/buscar/{cedula}")
+    @GetMapping(path = "/{cedula}")
     public Estudiante getEstudianteCedula(@PathVariable String cedula) {
         return this.estudianteService.getEstudianteCedula(cedula);
     }
 
-    @GetMapping(path = "/buscarTodo")
-    public List<Estudiante> getEstudiantes(@RequestParam String provincia) {
+    @GetMapping()
+    public List<Estudiante> getEstudiantes() {
 
-        return this.estudianteService.getEstudiantes().stream().filter(x -> x.getProvincia().equals(provincia)).toList();
+        return this.estudianteService.getEstudiantes();
     }
-    @GetMapping(path = "/buscarTodoProv")
+    @GetMapping(path = "/buscarProv")
     public List<Estudiante> getEstudiantesProv(@RequestParam String provincia) {
 
         return this.estudianteService.getEstudiantes(provincia);
     }
 
-    @PostMapping(path = "/insertar")
+    @PostMapping
     public void insertarEstudiante(@RequestBody Estudiante estudiante) {
         this.estudianteService.insertarEstudiante(estudiante);
     }
 
-    @PutMapping(path = "/actualizar/{identificador}")
+    @PutMapping(path = "/{identificador}")
     public void actualizarEstudiante(@RequestBody Estudiante estudiante, @PathVariable Integer identificador) {
         estudiante.setId(identificador);
         this.estudianteService.actualizarEstudiante(estudiante);
     }
 
-    @PatchMapping(path = "/actualizarParcial/{identificador}")
+    @PatchMapping(path = "/{identificador}")
     public void actualizarEstudianteParcial(@RequestBody Estudiante estudiante, @PathVariable Integer identificador) {
         estudiante.setId(identificador);
         this.estudianteService.actualizarEstudiante(estudiante);
     }
 
-    @DeleteMapping(path = "/eliminar/{id}")
+    @DeleteMapping(path = "/{id}")
     public void eliminarEstudiante(@PathVariable Integer id) {
         this.estudianteService.eliminarEstudiate(id);
     }
