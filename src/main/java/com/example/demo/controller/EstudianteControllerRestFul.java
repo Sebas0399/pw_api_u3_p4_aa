@@ -3,6 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.repository.model.Estudiante;
 import com.example.demo.service.IEstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMessage;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,14 +17,20 @@ public class EstudianteControllerRestFul {
     private IEstudianteService estudianteService;
 
     @GetMapping(path = "/{cedula}")
-    public Estudiante getEstudianteCedula(@PathVariable String cedula) {
-        return this.estudianteService.getEstudianteCedula(cedula);
+    public ResponseEntity<Estudiante> getEstudianteCedula(@PathVariable String cedula) {
+        Estudiante estudiante=this.estudianteService.getEstudianteCedula(cedula);
+
+        return ResponseEntity.status(227).body(estudiante);
     }
 
     @GetMapping()
-    public List<Estudiante> getEstudiantes() {
+    public ResponseEntity<List<Estudiante>> getEstudiantes() {
+        List<Estudiante> estudiantes=this.estudianteService.getEstudiantes();
+        HttpHeaders cabeceras=new HttpHeaders();
+        cabeceras.add("Detalle mensaje","Ciudadanos consultados exitosamente");
+        cabeceras.add("Valor del API","Incalculable");
 
-        return this.estudianteService.getEstudiantes();
+        return new ResponseEntity<>(estudiantes,cabeceras,228);
     }
     @GetMapping(path = "/buscarProv")
     public List<Estudiante> getEstudiantesProv(@RequestParam String provincia) {
