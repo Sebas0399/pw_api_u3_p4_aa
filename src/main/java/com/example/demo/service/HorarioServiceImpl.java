@@ -21,8 +21,8 @@ public class HorarioServiceImpl implements IHorarioService{
     }
 
     @Override
-    public void create(Horario horario) {
-        this.horarioRepository.create(horario);
+    public Horario create(Horario horario) {
+        return this.horarioRepository.create(horario);
     }
 
     @Override

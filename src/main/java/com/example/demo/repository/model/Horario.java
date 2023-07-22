@@ -1,5 +1,6 @@
 package com.example.demo.repository.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,7 +19,8 @@ public class Horario {
 
     private String dia;
 
-    @OneToMany(mappedBy = "horario")
+    @OneToMany(mappedBy = "horario" )
+    @JsonIgnore
     private List<Materia>materias;
 
     public List<Materia> getMaterias() {

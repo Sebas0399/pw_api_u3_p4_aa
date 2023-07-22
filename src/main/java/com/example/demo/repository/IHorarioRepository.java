@@ -8,7 +8,7 @@ public interface IHorarioRepository {
     public List<Horario> readAll();
     public Horario read(Integer id);
 
-    public void create(Horario horario);
+    public Horario create(Horario horario);
     public void update(Horario horario);
     public void delete(Integer id);
 

@@ -27,8 +27,9 @@ public class HorarioRepositoryImpl implements  IHorarioRepository{
     }
 
     @Override
-    public void create(Horario horario) {
+    public Horario create(Horario horario) {
         this.entityManager.persist(horario);
+        return horario;
     }
 
     @Override

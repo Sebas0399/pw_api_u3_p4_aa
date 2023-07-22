@@ -13,7 +13,7 @@ public class Materia {
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "hor_id")
+    @JoinColumn(name = "hor_id" )
     private Horario horario;
 
     public Horario getHorario() {

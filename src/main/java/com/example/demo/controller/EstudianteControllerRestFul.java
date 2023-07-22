@@ -3,9 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.repository.model.Estudiante;
 import com.example.demo.service.IEstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMessage;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +14,14 @@ public class EstudianteControllerRestFul {
     @Autowired
     private IEstudianteService estudianteService;
 
-    @GetMapping(path = "/{cedula}")
-    public ResponseEntity<Estudiante> getEstudianteCedula(@PathVariable String cedula) {
+    @GetMapping(path = "/{cedula}",produces = MediaType.APPLICATION_XML_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Estudiante getEstudianteCedula(@PathVariable String cedula) {
         Estudiante estudiante=this.estudianteService.getEstudianteCedula(cedula);
 
-        return ResponseEntity.status(227).body(estudiante);
+        return (estudiante);
     }
+
 
     @GetMapping()
     public ResponseEntity<List<Estudiante>> getEstudiantes() {
@@ -38,10 +38,11 @@ public class EstudianteControllerRestFul {
         return this.estudianteService.getEstudiantes(provincia);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
     public void insertarEstudiante(@RequestBody Estudiante estudiante) {
         this.estudianteService.insertarEstudiante(estudiante);
     }
+
 
     @PutMapping(path = "/{identificador}")
     public void actualizarEstudiante(@RequestBody Estudiante estudiante, @PathVariable Integer identificador) {
