@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.repository.model.Estudiante;
+import com.example.demo.service.to.EstudianteTO;
 
 import java.util.List;
 
@@ -13,6 +14,6 @@ public interface IEstudianteService {
     public void actualizarParcial(String cedulaActual,String cedulaNueva);
     public void eliminarEstudiate(Integer id);
     public List<Estudiante> getEstudiantes(String provincia);
-
+    public List<EstudianteTO>getEstudiantesTO();
 
 }

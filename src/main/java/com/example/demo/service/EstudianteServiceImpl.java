@@ -2,13 +2,15 @@ package com.example.demo.service;
 
 import com.example.demo.repository.model.Estudiante;
 import com.example.demo.repository.IEstudianteRepository;
+import com.example.demo.service.to.EstudianteTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class EstudianteServiceImpl implements IEstudianteService{
+public class EstudianteServiceImpl implements IEstudianteService {
     @Autowired
     private IEstudianteRepository estudianteRepository;
 
@@ -39,7 +41,7 @@ public class EstudianteServiceImpl implements IEstudianteService{
 
     @Override
     public void actualizarParcial(String cedulaActual, String cedulaNueva) {
-        this.estudianteRepository.actualizarParcial(cedulaActual,cedulaNueva);
+        this.estudianteRepository.actualizarParcial(cedulaActual, cedulaNueva);
     }
 
     @Override
@@ -50,5 +52,24 @@ public class EstudianteServiceImpl implements IEstudianteService{
     @Override
     public List<Estudiante> getEstudiantes(String provincia) {
         return this.estudianteRepository.getEstudiantes(provincia);
+    }
+
+    @Override
+    public List<EstudianteTO> getEstudiantesTO() {
+        List<Estudiante> estudiantes = this.estudianteRepository.getEstudiantes();
+
+
+        return estudiantes.stream().map(estu -> convertir(estu)).collect(Collectors.toList());
+    }
+
+    public EstudianteTO convertir(Estudiante estudiante) {
+        EstudianteTO estudianteTO = new EstudianteTO();
+        estudianteTO.setApellido(estudiante.getApellido());
+        estudianteTO.setCedula(estudiante.getCedula());
+        estudianteTO.setId(estudiante.getId());
+        estudianteTO.setFechaNacimiento(estudiante.getFechaNacimiento());
+        estudianteTO.setProvincia(estudiante.getProvincia());
+        estudianteTO.setNombre(estudiante.getNombre());
+        return estudianteTO;
     }
 }

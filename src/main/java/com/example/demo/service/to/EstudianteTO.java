@@ -1,42 +1,27 @@
-package com.example.demo.repository.model;
+package com.example.demo.service.to;
 
-import jakarta.persistence.*;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.RepresentationModel;
 
-import java.util.List;
+import java.io.Serializable;
 
-@Table(name = "estudiante")
-@Entity
-public class Estudiante {
-    @Id
-    @Column(name = "est_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EstudianteTO extends RepresentationModel<EstudianteTO> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
-    @Column(name = "est_nombre")
+
     private String nombre;
-    @Column(name = "est_apellido")
 
     private String apellido;
-    @Column(name = "est_cedula")
 
     private String cedula;
-    @Column(name = "est_fecha_nacimiento")
+
 
     private String fechaNacimiento;
-    @Column(name = "est_provincia")
 
     private String provincia;
 
-    @OneToMany
-    private List<Materia> materias;
-
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
-
+    //set y get
     public Integer getId() {
         return id;
     }
@@ -75,5 +60,13 @@ public class Estudiante {
 
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
     }
 }

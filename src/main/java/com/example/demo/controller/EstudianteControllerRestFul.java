@@ -2,11 +2,19 @@ package com.example.demo.controller;
 
 import com.example.demo.repository.model.Estudiante;
 import com.example.demo.service.IEstudianteService;
+import com.example.demo.service.to.EstudianteTO;
+import com.example.demo.service.to.MateriaTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.hateoas.Link;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/estudiantes")
@@ -14,24 +22,35 @@ public class EstudianteControllerRestFul {
     @Autowired
     private IEstudianteService estudianteService;
 
-    @GetMapping(path = "/{cedula}",produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(path = "/{cedula}", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Estudiante getEstudianteCedula(@PathVariable String cedula) {
-        Estudiante estudiante=this.estudianteService.getEstudianteCedula(cedula);
+        Estudiante estudiante = this.estudianteService.getEstudianteCedula(cedula);
 
         return (estudiante);
     }
 
 
     @GetMapping()
-    public ResponseEntity<List<Estudiante>> getEstudiantes() {
-        List<Estudiante> estudiantes=this.estudianteService.getEstudiantes();
-        HttpHeaders cabeceras=new HttpHeaders();
-        cabeceras.add("Detalle mensaje","Ciudadanos consultados exitosamente");
-        cabeceras.add("Valor del API","Incalculable");
+    public ResponseEntity<List<EstudianteTO>> getEstudiantesHATEOAS() {
+        List<EstudianteTO> estudiantes = this.estudianteService.getEstudiantesTO();
+        if (estudiantes.isEmpty()) {
+            return new ResponseEntity<>(null, null, 400);
 
-        return new ResponseEntity<>(estudiantes,cabeceras,228);
+        } else {
+            for (EstudianteTO e : estudiantes) {
+                Link myLink = linkTo(methodOn(EstudianteControllerRestFul.class).buscarPorEstudiante(e.getCedula())).withRel("materias");
+                e.add(myLink);
+            }
+            return new ResponseEntity<>(estudiantes, null, 200);
+        }
     }
+
+    @GetMapping(path = "/{cedula}/materias")
+    public ResponseEntity<List<MateriaTO>> buscarPorEstudiante(@PathVariable String cedula) {
+        return null;
+    }
+
     @GetMapping(path = "/buscarProv")
     public List<Estudiante> getEstudiantesProv(@RequestParam String provincia) {
 

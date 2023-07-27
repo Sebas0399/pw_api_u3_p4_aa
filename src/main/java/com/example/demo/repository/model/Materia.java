@@ -16,6 +16,18 @@ public class Materia {
     @JoinColumn(name = "hor_id" )
     private Horario horario;
 
+    @ManyToOne
+    @JoinColumn(name = "est_id" )
+    private Materia materia;
+
+    public Materia getMateria() {
+        return materia;
+    }
+
+    public void setMateria(Materia materia) {
+        this.materia = materia;
+    }
+
     public Horario getHorario() {
         return horario;
     }
