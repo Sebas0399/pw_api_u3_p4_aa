@@ -7,6 +7,8 @@ import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public class MateriaRepositoryImpl implements IMateriaRepository{
@@ -22,5 +24,17 @@ public class MateriaRepositoryImpl implements IMateriaRepository{
         TypedQuery<Materia>myQuery=this.entityManager.createQuery("SELECT m FROM Materia m WHERE m.nombre=:nombre",Materia.class);
         myQuery.setParameter("nombre",nombre);
         return myQuery.getSingleResult();
+    }
+
+    @Override
+    public List<Materia> readByCedulaEstudiante(String cedula) {
+        TypedQuery<Materia>myQuery=this.entityManager.createQuery("SELECT m FROM Materia m WHERE m.estudiante.cedula=:cedula",Materia.class);
+        myQuery.setParameter("cedula",cedula);
+        return myQuery.getResultList();
+    }
+
+    @Override
+    public Materia readById(Integer id) {
+        return this.entityManager.find(Materia.class,id);
     }
 }

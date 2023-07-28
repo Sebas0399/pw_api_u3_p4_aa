@@ -19,17 +19,9 @@ public class Horario {
 
     private String dia;
 
-    @OneToMany(mappedBy = "horario" )
-    @JsonIgnore
-    private List<Materia>materias;
 
-    public List<Materia> getMaterias() {
-        return materias;
-    }
 
-    public void setMaterias(List<Materia> materias) {
-        this.materias = materias;
-    }
+
 
     public String getHora() {
         return hora;

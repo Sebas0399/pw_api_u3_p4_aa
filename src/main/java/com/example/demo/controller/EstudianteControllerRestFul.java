@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.repository.model.Estudiante;
+import com.example.demo.repository.model.Materia;
 import com.example.demo.service.IEstudianteService;
+import com.example.demo.service.IMateriaService;
 import com.example.demo.service.to.EstudianteTO;
 import com.example.demo.service.to.MateriaTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class EstudianteControllerRestFul {
     @Autowired
     private IEstudianteService estudianteService;
 
+    @Autowired
+    private IMateriaService materiaService;
+
     @GetMapping(path = "/{cedula}", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Estudiante getEstudianteCedula(@PathVariable String cedula) {
@@ -31,7 +36,7 @@ public class EstudianteControllerRestFul {
     }
 
 
-    @GetMapping()
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<EstudianteTO>> getEstudiantesHATEOAS() {
         List<EstudianteTO> estudiantes = this.estudianteService.getEstudiantesTO();
         if (estudiantes.isEmpty()) {
@@ -48,7 +53,8 @@ public class EstudianteControllerRestFul {
 
     @GetMapping(path = "/{cedula}/materias")
     public ResponseEntity<List<MateriaTO>> buscarPorEstudiante(@PathVariable String cedula) {
-        return null;
+        
+        return new ResponseEntity<>(this.materiaService.readByCedulaEstudiante(cedula),null,200);
     }
 
     @GetMapping(path = "/buscarProv")

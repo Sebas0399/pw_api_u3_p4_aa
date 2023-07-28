@@ -11,33 +11,31 @@ public class Materia {
     private Integer id;
     @Column(name = "mat_nombre")
     private String nombre;
+    @Column(name = "mat_numero_creditos")
+    private Integer numeroCreditos;
+
 
     @ManyToOne
-    @JoinColumn(name = "hor_id" )
-    private Horario horario;
+    @JoinColumn(name = "mat_est_id" )
+    private Estudiante estudiante;
 
-    @ManyToOne
-    @JoinColumn(name = "est_id" )
-    private Materia materia;
 
-    public Materia getMateria() {
-        return materia;
+    public Integer getNumeroCreditos() {
+        return numeroCreditos;
     }
 
-    public void setMateria(Materia materia) {
-        this.materia = materia;
+    public void setNumeroCreditos(Integer numeroCreditos) {
+        this.numeroCreditos = numeroCreditos;
     }
 
-    public Horario getHorario() {
-        return horario;
+    public Estudiante getEstudiante() {
+        return estudiante;
     }
 
-    public void setHorario(Horario horario) {
-        this.horario = horario;
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "hor_id")
     public Integer getId() {
         return id;
     }
