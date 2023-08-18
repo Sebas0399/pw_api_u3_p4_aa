@@ -1,6 +1,6 @@
 package com.example.demo.repository.model;
+import javax.persistence.*;
 
-import jakarta.persistence.*;
 
 @Table(name = "materia")
 @Entity

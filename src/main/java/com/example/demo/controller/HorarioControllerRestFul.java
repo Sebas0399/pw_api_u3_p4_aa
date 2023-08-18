@@ -10,6 +10,8 @@ import java.util.List;
 
 @RequestMapping("/horarios")
 @RestController
+@CrossOrigin
+
 public class HorarioControllerRestFul {
     @Autowired
     private IHorarioService horarioService;

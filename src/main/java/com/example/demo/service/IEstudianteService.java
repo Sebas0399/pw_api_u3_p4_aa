@@ -9,6 +9,8 @@ public interface IEstudianteService {
     public Estudiante getEstudianteCedula(String cedula);
     public List<Estudiante> getEstudiantes();
     public void eliminarEstudiate(String cedula);
+    public Estudiante getEstudianteId(Integer id);
+
     public void insertarEstudiante(Estudiante estudiante);
     public void actualizarEstudiante(Estudiante estudiante);
     public void actualizarParcial(String cedulaActual,String cedulaNueva);

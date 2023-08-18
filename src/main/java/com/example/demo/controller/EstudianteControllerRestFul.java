@@ -20,6 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/estudiantes")
+@CrossOrigin
 public class EstudianteControllerRestFul {
     @Autowired
     private IEstudianteService estudianteService;
@@ -27,7 +28,7 @@ public class EstudianteControllerRestFul {
     @Autowired
     private IMateriaService materiaService;
 
-    @GetMapping(path = "/{cedula}", produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(path = "/{cedula}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Estudiante getEstudianteCedula(@PathVariable String cedula) {
         Estudiante estudiante = this.estudianteService.getEstudianteCedula(cedula);
@@ -63,13 +64,13 @@ public class EstudianteControllerRestFul {
         return this.estudianteService.getEstudiantes(provincia);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void insertarEstudiante(@RequestBody Estudiante estudiante) {
         this.estudianteService.insertarEstudiante(estudiante);
     }
 
 
-    @PutMapping(path = "/{identificador}")
+    @PutMapping(path = "/{identificador}" ,consumes = MediaType.APPLICATION_JSON_VALUE)
     public void actualizarEstudiante(@RequestBody Estudiante estudiante, @PathVariable Integer identificador) {
         estudiante.setId(identificador);
         this.estudianteService.actualizarEstudiante(estudiante);
@@ -81,9 +82,11 @@ public class EstudianteControllerRestFul {
         this.estudianteService.actualizarEstudiante(estudiante);
     }
 
-    @DeleteMapping(path = "/{id}")
-    public void eliminarEstudiante(@PathVariable Integer id) {
+    @DeleteMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Estudiante eliminarEstudiante(@PathVariable Integer id) {
+        Estudiante est=this.estudianteService.getEstudianteId(id);
         this.estudianteService.eliminarEstudiate(id);
+        return est;
     }
 
 }

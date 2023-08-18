@@ -1,11 +1,9 @@
 package com.example.demo.repository;
 
 import com.example.demo.repository.model.Horario;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Table;
-import jakarta.persistence.TypedQuery;
-import jakarta.transaction.Transactional;
+import javax.persistence.*;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

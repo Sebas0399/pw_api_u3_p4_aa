@@ -1,12 +1,15 @@
 package com.example.demo.service;
 
+import ch.qos.logback.core.util.TimeUtil;
 import com.example.demo.repository.model.Estudiante;
 import com.example.demo.repository.IEstudianteRepository;
 import com.example.demo.service.to.EstudianteTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +33,17 @@ public class EstudianteServiceImpl implements IEstudianteService {
     }
 
     @Override
+    public Estudiante getEstudianteId(Integer id) {
+        return this.estudianteRepository.getEstudianteId(id);
+    }
+
+    @Override
     public void insertarEstudiante(Estudiante estudiante) {
+        try {
+            TimeUnit.SECONDS.sleep(20);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         this.estudianteRepository.insertarEstudiante(estudiante);
     }
 

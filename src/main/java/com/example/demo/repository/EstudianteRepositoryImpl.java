@@ -1,11 +1,9 @@
 package com.example.demo.repository;
 
 import com.example.demo.repository.model.Estudiante;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
-import jakarta.transaction.Transactional;
+import javax.persistence.*;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

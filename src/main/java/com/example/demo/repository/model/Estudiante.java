@@ -1,11 +1,13 @@
 package com.example.demo.repository.model;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Table(name = "estudiante")
 @Entity
+@JsonIgnoreProperties(value = "materias")
 public class Estudiante {
     @Id
     @Column(name = "est_id")
@@ -27,6 +29,7 @@ public class Estudiante {
     private String provincia;
 
     @OneToMany
+
     private List<Materia> materias;
 
     public String getProvincia() {
