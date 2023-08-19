@@ -18,6 +18,6 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         LOG.error("Unauthorizer error {}",authException.getMessage());
         LOG.error(request.getServletPath());
-
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 }
